@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: recipehub-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: recipehub
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - recipehub-net
+    # Sin "ports:" — MongoDB NO se expone al exterior (requisito del examen)
+
+  api:
+    build: ./backend
+    container_name: recipehub-api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      MONGO_URI: mongodb://admin:${MONGO_PASSWORD}@mongo:27017/recipehub?authSource=admin
+      JWT_SECRET: ${JWT_SECRET}
+      NODE_ENV: production
+    depends_on:
+      - mongo
+    networks:
+      - recipehub-net
+
+volumes:
+  mongo_data:
+    name: recipehub_mongo_data
+
+networks:
+  recipehub-net:
+    driver: bridge
