@@ -1,24 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const comentarioSchema = new mongoose.Schema(
   {
-    texto: {
-      type: String,
-      required: [true, 'El texto del comentario es obligatorio'],
-      trim: true,
-    },
-    autor: {
+    recetaId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Usuario',
+      ref: "Receta",
       required: true,
     },
-    receta: {
+    usuarioId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Receta',
+      ref: "Usuario",
       required: true,
     },
+    texto: { type: String, required: true, trim: true },
+    calificacion: { type: Number, required: true, min: 1, max: 5 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model('Comentario', comentarioSchema);
+module.exports = mongoose.model("Comentario", comentarioSchema);

@@ -1,35 +1,25 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const usuarioSchema = new mongoose.Schema(
   {
-    nombre: {
-      type: String,
-      required: [true, 'El nombre es obligatorio'],
-      trim: true,
-    },
+    nombre: { type: String, required: true, trim: true },
     email: {
       type: String,
-      required: [true, 'El email es obligatorio'],
+      required: true,
       unique: true,
       lowercase: true,
       trim: true,
     },
-    password: {
-      type: String,
-      required: [true, 'La contraseña es obligatoria'],
-      minlength: 6,
-    },
-    avatar: {
-      type: String,
-      default: '',
-    },
+    password: { type: String, required: true, minlength: 6 },
+    bio: { type: String, default: "" },
+    avatarUrl: { type: String, default: "" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-usuarioSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+usuarioSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
@@ -38,4 +28,4 @@ usuarioSchema.methods.compararPassword = function (passwordPlano) {
   return bcrypt.compare(passwordPlano, this.password);
 };
 
-module.exports = mongoose.model('Usuario', usuarioSchema);
+module.exports = mongoose.model("Usuario", usuarioSchema);
