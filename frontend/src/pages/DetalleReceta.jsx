@@ -29,7 +29,7 @@ function DetalleReceta() {
       }
     }
     cargar()
-  }, [id])
+  }, [id, navigate])
 
   const eliminarReceta = async () => {
     if (!confirm('¿Eliminar esta receta?')) return

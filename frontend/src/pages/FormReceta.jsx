@@ -38,7 +38,7 @@ function FormReceta({ modo }) {
         })
       }).catch(() => navigate('/'))
     }
-  }, [id, modo, usuario])
+  }, [id, modo, usuario, navigate])
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 

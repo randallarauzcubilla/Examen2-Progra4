@@ -22,7 +22,7 @@ function Perfil() {
       }
     }
     cargar()
-  }, [usuario])
+  }, [usuario, navigate])
 
   const handleLogout = () => {
     logout()

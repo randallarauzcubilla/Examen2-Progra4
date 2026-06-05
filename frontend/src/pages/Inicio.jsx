@@ -9,23 +9,23 @@ function Inicio() {
   const [categoria, setCategoria] = useState('')
   const [dificultad, setDificultad] = useState('')
 
-  const cargarRecetas = async () => {
-    setLoading(true)
-    try {
-      const params = {}
-      if (categoria) params.categoria = categoria
-      if (dificultad) params.dificultad = dificultad
-      if (busqueda) params.tags = busqueda
-      const { data } = await api.get('/recetas', { params })
-      setRecetas(data)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    const fetchRecetas = async () => {
+      setLoading(true)
+      try {
+        const params = {}
+        if (categoria) params.categoria = categoria
+        if (dificultad) params.dificultad = dificultad
+        const { data } = await api.get('/recetas', { params })
+        setRecetas(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
-
-  useEffect(() => { cargarRecetas() }, [categoria, dificultad])
+    fetchRecetas()
+  }, [categoria, dificultad])
 
   const recetasFiltradas = recetas.filter(r =>
     r.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
