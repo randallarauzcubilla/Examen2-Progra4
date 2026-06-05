@@ -1,5 +1,4 @@
-// Inicio.jsx
-function NuevaReceta() {
-  return <div>TODO: Inicio</div>
+import FormReceta from './FormReceta'
+export default function NuevaReceta() {
+  return <FormReceta modo="nueva" />
 }
-export default NuevaReceta
