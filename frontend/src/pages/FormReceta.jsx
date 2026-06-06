@@ -145,7 +145,7 @@ function FormReceta({ modo }) {
             </div>
             {form.ingredientes.map((ing, i) => (
               <div key={i} style={styles.rowIngrediente}>
-                <input style={{...styles.input, flex:2}} placeholder="Nombre" value={ing.nombre}
+                <input style={{...styles.input, flex:2}} placeholder="Nombre" value={ing.nombre} autoComplete="off"
                   onChange={e => setIngrediente(i, 'nombre', e.target.value)} required />
                 <input style={{...styles.input, flex:1}} type="number" placeholder="Cantidad" value={ing.cantidad}
                   onChange={e => setIngrediente(i, 'cantidad', e.target.value)} required min={0} />
